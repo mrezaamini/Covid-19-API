@@ -1,3 +1,4 @@
+//What SuperAdmins Do
 const router = require('express').Router()
 const UserSchema = require('../models/user')
 const {adminUserPass_validation} = require('../validation')

@@ -3,15 +3,12 @@ const app = express()
 
 const mongoose = require('mongoose')
 
-//routes
+//Routes
 const publicRoute = require('./routes/public')
 const superAdminRoute = require('./Routes/superAdmin')
 const adminRoute = require('./routes/admin')
 
 //DB connection 
-//mongoose.connect('mongodb+srv://cov19admin:<cov19admin>@cluster0.cqjgk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-//,{useNewUrlParser:true},()=>console.log('connected to DB'))
-
 mongoose.connect('mongodb://localhost/admin'
 ,{useNewUrlParser:true},()=>console.log('connected to DB'))
 
@@ -21,4 +18,4 @@ app.use('/countries',publicRoute)
 app.use('/',superAdminRoute)
 app.use('/countries',adminRoute)
 
-app.listen(3000, ()=> console.log('Server Is Running'))
+app.listen(3000, ()=> console.log('Server Is Running On Port 3000'))
