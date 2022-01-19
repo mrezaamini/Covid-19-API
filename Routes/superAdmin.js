@@ -4,6 +4,8 @@ const UserSchema = require('../models/user')
 const CountrySchema = require('../models/country')
 const bcrypt = require('bcryptjs')
 const {adminUserPass_validation, newCountry_validation} = require('../validation')
+const {ROLES} = require('../config/roles_list')
+
 
 router.delete('/admin', async(req,res)=>{ //to check db
     const deleted = await UserSchema.deleteMany();
@@ -32,7 +34,8 @@ router.post('/admin', async (req, res)=>{
     console.log('password:'+req.body.adminPassword+' >>hashed:'+hashPassword)
     const user = new UserSchema({
         username:req.body.adminUsername,
-        password:hashPassword //add hashed password to database for security
+        password:hashPassword, //add hashed password to database for security
+        role:ROLES.ADMIN
     })
     try{
         const savedAdmin = await user.save() 
@@ -73,9 +76,9 @@ router.delete('/allCountry', async(req,res)=>{ //to check db
     const deleted = await CountrySchema.deleteMany();
 })
 
-
-router.put('/countries/:countryName',(req, res)=>{
-    res.send(`change permissions ${req.params.countryName}`)
-})
+//TODO
+// router.put('/countries/:countryName',(req, res)=>{
+//     res.send(`change permissions ${req.params.countryName}`)
+// })
 
 module.exports = router

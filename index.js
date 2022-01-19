@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const publicRoute = require('./routes/public')
 const superAdminRoute = require('./Routes/superAdmin')
 const adminRoute = require('./routes/admin')
+const authRoute = require('./routes/auth')
 
 //DB connection 
 mongoose.connect('mongodb://localhost/admin'
@@ -17,5 +18,6 @@ app.use(express.json())
 app.use('/countries',publicRoute)
 app.use('/',superAdminRoute)
 app.use('/countries',adminRoute)
+app.use('/',authRoute)
 
 app.listen(3000, ()=> console.log('Server Is Running On Port 3000'))
