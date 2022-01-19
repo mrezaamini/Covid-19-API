@@ -1,12 +1,11 @@
 const express = require('express')
-const router = require('./Routes/auth')
 const app = express()
 
 const mongoose = require('mongoose')
 
 //routes
-const authRoute = require('./routes/auth')
 const publicRoute = require('./routes/public')
+const superAdminRoute = require('./Routes/superAdmin')
 const adminRoute = require('./routes/admin')
 
 //DB connection 
@@ -18,8 +17,8 @@ mongoose.connect('mongodb://localhost/admin'
 
 //midllewares
 app.use(express.json())
-app.use('/',authRoute)
 app.use('/countries',publicRoute)
-app.use('/admin',adminRoute)
+app.use('/',superAdminRoute)
+app.use('/countries',adminRoute)
 
 app.listen(3000, ()=> console.log('Server Is Running'))
