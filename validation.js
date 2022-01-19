@@ -11,5 +11,12 @@ const adminUserPass_validation = (newAdmin) =>{
     return adminSchema.validate(newAdmin)
     
 }
+//newCountry validation (only name is important)
+const newCountry_validation = (newCountry) =>{
+    const countrySchema = Joi.object({
+        country:Joi.string().min(3).max(30).required()
+    })
+}
 
 module.exports.adminUserPass_validation = adminUserPass_validation
+module.exports.newCountry_validation = newCountry_validation
