@@ -30,7 +30,7 @@ router.post('/admin', async (req, res)=>{
     })
     try{
         const savedAdmin = await user.save() 
-        res.send(savedAdmin)
+        res.status(201).send(savedAdmin) //successful added !
     }catch(err){
         res.status(400).send(err)
     }
@@ -53,7 +53,7 @@ router.post('/countries/:countryName', async(req, res)=>{
     })
     try{
         const savedCountry = await newCountry.save() 
-        res.send(savedCountry)
+        res.status(201).send(savedCountry) //successful added !
     }catch(err){
         res.status(400).send(err)
     }
