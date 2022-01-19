@@ -27,7 +27,9 @@ router.post('/admin', async (req, res)=>{
     //Hashing Password
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(req.body.adminPassword,salt)
-
+    console.log('--New Admin Add--')
+    console.log('username:'+req.body.adminUsername)
+    console.log('password:'+req.body.adminPassword+' >>hashed:'+hashPassword)
     const user = new UserSchema({
         username:req.body.adminUsername,
         password:hashPassword //add hashed password to database for security
