@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const UserSchema = require('../models/user')
+const {adminUserPass_validation} = require('../validation')
 
 //validate
-const Joi = require('Joi')
-const adminSchema = Joi.object({
-    adminUsername: Joi.string().min(3).required(),
-    adminPassword: Joi.string().min(5).required()
-})
+// const Joi = require('Joi')
+// const adminSchema = Joi.object({
+//     adminUsername: Joi.string().min(3).required(),
+//     adminPassword: Joi.string().min(5).required()
+// })
 
 
 router.delete('/', async(req,res)=>{
@@ -20,7 +21,7 @@ router.get('/', async(req, res)=>{
 
 router.post('/', async (req, res)=>{
     //validate new admin username and password
-    const {error} = adminSchema.validate(req.body)
+    const {error} = adminUserPass_validation(req.body)
     if(error){
         return res.status(400).send(error.details[0].message)
     }
