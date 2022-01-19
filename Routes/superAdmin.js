@@ -2,6 +2,7 @@
 const router = require('express').Router()
 const UserSchema = require('../models/user')
 const CountrySchema = require('../models/country')
+const bcrypt = require('bcryptjs')
 const {adminUserPass_validation, newCountry_validation} = require('../validation')
 
 router.delete('/admin', async(req,res)=>{ //to check db
@@ -23,10 +24,13 @@ router.post('/admin', async (req, res)=>{
     if (admin){
         return res.status(400).send('User already taken!');
     } 
+    //Hashing Password
+    const salt = await bcrypt.genSalt(10)
+    const hashPassword = await bcrypt.hash(req.body.adminPassword,salt)
 
     const user = new UserSchema({
         username:req.body.adminUsername,
-        password:req.body.adminPassword
+        password:hashPassword //add hashed password to database for security
     })
     try{
         const savedAdmin = await user.save() 
