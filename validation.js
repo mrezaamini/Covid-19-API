@@ -19,5 +19,13 @@ const newCountry_validation = (newCountry) =>{
     return countrySchema.validate(newCountry)
 }
 
+//validate sort query
+const sortQuery_validation = (sortQuery) =>{
+    const sortQuerySchema = Joi.object({
+        sort:Joi.string().valid('todayCases','todayRecoverd','todayDeaths')
+    })
+    return sortQuerySchema.validate(sortQuery)
+}
 module.exports.adminUserPass_validation = adminUserPass_validation
 module.exports.newCountry_validation = newCountry_validation
+module.exports.sortQuery_validation = sortQuery_validation
