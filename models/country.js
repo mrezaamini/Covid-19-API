@@ -37,6 +37,11 @@ const countrySchema = new mongoose.Schema({
         type: [String],
         required: true,
         default: []
+    },
+    last_changed:{
+        type:String,
+        required:true,
+        default:""
     }
 })
 

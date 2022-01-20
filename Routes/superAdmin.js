@@ -55,9 +55,16 @@ router.post('/countries/:countryName', authVerify, async (req, res) => {
     if (country) {
         return res.status(400).send('Country already exists!');
     }
-
+    
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let hours = date_ob.getHours();
+    let minutes = date_ob.getMinutes();
     const newCountry = new CountrySchema({ //making new country
-        country: req.params.countryName.toLowerCase()
+        country: req.params.countryName.toLowerCase(),
+        last_changed:year + "-" + month + "-" + date + " " + hours + ":" + minutes
     })
     try {
         const savedCountry = await newCountry.save()
@@ -68,7 +75,7 @@ router.post('/countries/:countryName', authVerify, async (req, res) => {
 })
 
 
-router.put('/countries/:countryName', authVerify, async (req, res) => { //adding admins to specific country
+router.put('/countries/country', authVerify, async (req, res) => { //adding admins to specific country
     if (req.user.role !== ROLES.SUPERADMIN) {
         return res.status(403).send("ACCESS DENIED!!")
     }
