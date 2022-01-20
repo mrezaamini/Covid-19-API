@@ -8,14 +8,6 @@ const { ROLES } = require('../config/roles_list')
 const authVerify = require('../middlewares/verifyToken')
 
 
-router.delete('/admin', async (req, res) => { //to check db
-    const deleted = await UserSchema.deleteMany();
-})
-
-router.get('/admin', async (req, res) => { // to check db
-    const admins = await UserSchema.find();
-    res.json(admins)
-})
 //Make new admin with username and password
 router.post('/admin', authVerify, async (req, res) => {
     if (req.user.role !== ROLES.SUPERADMIN) {
@@ -64,7 +56,7 @@ router.post('/countries/:countryName', authVerify, async (req, res) => {
         return res.status(400).send('Country already exists!');
     }
 
-    const newCountry = new CountrySchema({
+    const newCountry = new CountrySchema({ //making new country
         country: req.params.countryName.toLowerCase()
     })
     try {
@@ -75,17 +67,8 @@ router.post('/countries/:countryName', authVerify, async (req, res) => {
     }
 })
 
-router.get('/allCountry', async (req, res) => { // to check db
-    const countries = await CountrySchema.find();
-    res.json(countries)
-})
-router.delete('/allCountry', async (req, res) => { //to check db
-    const deleted = await CountrySchema.deleteMany();
-})
 
-
-router.put('/countries/:countryName', authVerify, async (req, res) => {
-    // res.send(`change permissions ${req.params.countryName}`)
+router.put('/countries/:countryName', authVerify, async (req, res) => { //adding admins to specific country
     if (req.user.role !== ROLES.SUPERADMIN) {
         return res.status(403).send("ACCESS DENIED!!")
     }
@@ -106,12 +89,29 @@ router.put('/countries/:countryName', authVerify, async (req, res) => {
                 !adminIDs.includes(target_admin)
             })
         }
-        await target_country.save();
+        await target_country.save(); //saving country
         res.send(target_country)
 
     } catch (err) {
         res.status(500).send(err) //server data base error
     }
+})
+
+//extra db operations for deleting or viewing all admins and countries -- for debugging data base
+router.get('/allCountry', async (req, res) => { // to check db
+    const countries = await CountrySchema.find();
+    res.json(countries)
+})
+router.delete('/allCountry', async (req, res) => { //to check db
+    const deleted = await CountrySchema.deleteMany();
+})
+router.delete('/admin', async (req, res) => { //to check db
+    const deleted = await UserSchema.deleteMany();
+})
+
+router.get('/admin', async (req, res) => { // to check db
+    const admins = await UserSchema.find();
+    res.json(admins)
 })
 
 module.exports = router
