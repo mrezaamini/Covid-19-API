@@ -92,8 +92,9 @@ router.put('/countries/country', authVerify, async (req, res) => { //adding admi
                 }
             })
         } else  { // remove admins from country
-            target_country.admins = target_country.admins.filter((target_admin) => {
-                !adminIDs.includes(target_admin)
+            target_country.admins = target_country.admins.filter(
+                (target_admin) => {
+                !req.body.adminIDs.includes(target_admin)
             })
         }
         await target_country.save(); //saving country
