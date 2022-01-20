@@ -5,6 +5,7 @@ const authVerify = require('../middlewares/verifyToken')
 const CountrySchema = require('../models/country')
 
 router.put('/:countryName', authVerify, async (req, res) => {
+    //we assuem that admins specify every data for specific country to update
     if (req.user.role !== ROLES.ADMIN) {
         console.log(req.user.role)
         return res.status(403).send("ACCESS DENIED!!")
@@ -16,10 +17,10 @@ router.put('/:countryName', authVerify, async (req, res) => {
             return res.status(404).send('country not found!');
         }
         if (target_country.admins.includes(req.user._id)) {
-            target_country.todayCases = req.body.todayCases || target_country.todayCases;
-            target_country.todayDeaths = req.body.todayDeaths || target_country.todayDeaths;
-            target_country.todayRecovered = req.body.todayRecovered || target_country.todayRecovered;
-            target_country.critical = req.body.critical || target_country.critical;
+            target_country.todayCases = req.body.todayCases
+            target_country.todayDeaths = req.body.todayDeaths
+            target_country.todayRecovered = req.body.todayRecovered
+            target_country.critical = req.body.critical
             let date_ob = new Date();
             let date = ("0" + date_ob.getDate()).slice(-2);
             let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
