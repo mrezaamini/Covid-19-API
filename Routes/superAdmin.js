@@ -90,7 +90,7 @@ router.put('/countries/:countryName', authVerify, async (req, res) => { //adding
             })
         }
         await target_country.save(); //saving country
-        res.send(target_country)
+        res.status(201).send(target_country)
 
     } catch (err) {
         res.status(500).send(err) //server data base error
