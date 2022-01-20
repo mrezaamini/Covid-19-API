@@ -33,7 +33,7 @@ const countrySchema = new mongoose.Schema({
         required:true,
         default:0
     },
-    admins:{
+    admins:{ // to keep admins ids
         type: [String],
         required: true,
         default: []
