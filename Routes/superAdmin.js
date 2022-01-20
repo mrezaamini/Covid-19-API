@@ -5,6 +5,7 @@ const CountrySchema = require('../models/country')
 const bcrypt = require('bcryptjs')
 const {adminUserPass_validation, newCountry_validation} = require('../validation')
 const {ROLES} = require('../config/roles_list')
+const authVerify = require('../middlewares/verifyToken')
 
 
 router.delete('/admin', async(req,res)=>{ //to check db
@@ -16,7 +17,10 @@ router.get('/admin', async(req, res)=>{ // to check db
     res.json(admins)
 })
 //Make new admin with username and password
-router.post('/admin', async (req, res)=>{
+router.post('/admin',authVerify ,async (req, res)=>{
+    if(req.user.role!==ROLES.SUPERADMIN){
+        return res.status(403).send("ACCESS DENIED!!")
+    }
     //validate new admin username and password
     const {error} = adminUserPass_validation(req.body)
     if(error){
