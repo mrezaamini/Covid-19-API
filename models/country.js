@@ -32,6 +32,11 @@ const countrySchema = new mongoose.Schema({
         min:0,
         required:true,
         default:0
+    },
+    admins:{
+        type: [String],
+        required: true,
+        default: []
     }
 })
 
