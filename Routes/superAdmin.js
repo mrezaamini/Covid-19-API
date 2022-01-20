@@ -50,7 +50,10 @@ router.post('/admin',authVerify ,async (req, res)=>{
 })
 
 // Make new country with initial value of all cases equal to 0
-router.post('/countries/:countryName', async(req, res)=>{ 
+router.post('/countries/:countryName',authVerify, async(req, res)=>{ 
+    if(req.user.role!==ROLES.SUPERADMIN){
+        return res.status(403).send("ACCESS DENIED!!")
+    }
     //validate new country
     const {error} = newCountry_validation(req.params)
     if(error){
